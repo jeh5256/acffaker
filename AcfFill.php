@@ -66,4 +66,63 @@ class AcfFill
     {
        return $this->faker->imageUrl($width, $height);
     }
+
+    public function fillFile($type='pdf')
+    {
+        $randomFile = $this->faker->url();
+    }
+
+    public function fillWYSIWYG()
+    {
+        return $this->faker->randomHtml(2,3);
+    }
+
+    public function fillOembed()
+    {
+        return 'https://www.youtube.com/embed/YlyUfIn7r8I';
+    }
+
+    public function fillGallery($min=null, $max=10)
+    {
+        $gallery = [];
+        $num_of_images = ($min) ? intval($min) : intval($max);
+
+        for ($i = 1; $i < $num_of_images; $i++) {
+            $image = $this->fillImage();
+            $gallery[] = $image;
+        }
+
+        return $gallery;
+    }
+
+    public function fillLink($target='_self')
+    {
+        return [
+            'url' => $this->fillUrl(),
+            'title' => $this->fillText(10),
+            'target' => $target
+        ];
+    }
+
+    public function fillPostObject($post_types=['post'], $num_of_posts=5, $taxonomy=[])
+    {
+        if (!\is_array($post_types) && !empty($post_types)) {
+            $post_types = ['post'];
+        }
+
+        if (empty($post_types)) {
+            $post_types = ['post'];
+        }
+
+        $args = [
+            'post_type' => $post_types,
+            'numberposts' => \intval($num_of_posts)
+        ];
+
+        if (!\is_array($taxonomy) && !empty($taxonomy)) {
+            $args['taxono']
+        }
+
+
+    }
 }
