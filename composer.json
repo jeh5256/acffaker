@@ -1,5 +1,10 @@
 {
     "require": {
         "fzaninotto/faker": "^1.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "AcfFaker\\": "acf-faker"
+        }
     }
 }
