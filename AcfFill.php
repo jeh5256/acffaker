@@ -23,14 +23,6 @@ class AcfFill
             return $default_value;
         }
 
-        if (!\is_numeric($maxlength)) {
-            throw new \Error('maxLength must be an integer');
-        }
-
-        if (!ctype_alnum($prepend) || !ctype_alnum($append)) {
-            throw new Error('Prepend and Append must be a string or number');
-        }
-
         return $text = $this->faker->sentence($maxlength);;
     }
 
