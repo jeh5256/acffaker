@@ -11,13 +11,13 @@ class AcfFill
     protected $faker;
     protected $fields;
 
-    public function __construct($fields=[])
+    public function __construct($fields = [])
     {
         $this->faker = Faker::create();
         $this->fields = $fields;
     }
 
-    public function fillText($maxlength=10, $default_value='', $prepend='', $append='')
+    public function fillText($maxlength = 10, $default_value = '', $prepend = '', $append = '')
     {
         if (!empty($default_value)) {
             return $default_value;
@@ -34,7 +34,7 @@ class AcfFill
         return $text = $this->faker->sentence($maxlength);;
     }
 
-    public function fillNumber($default_value='', $min=0, $max=1000, $prepend='', $append='')
+    public function fillNumber($default_value = '', $min = 0, $max = 1000, $prepend = '', $append = '')
     {
         if (!empty($default_value)) {
             return $default_value;
@@ -43,7 +43,7 @@ class AcfFill
         return $number = $this->faker->numberBetween($min, $max);
     }
 
-    public function fillEmail($default_value='')
+    public function fillEmail($default_value = '')
     {
         if (!empty($default_value)) {
             return $default_value;
@@ -62,19 +62,19 @@ class AcfFill
         return $this->faker->password();
     }
 
-    public function fillImage($width=500, $height=500)
+    public function fillImage($width = 500, $height = 500)
     {
-       return $this->faker->imageUrl($width, $height);
+        return $this->faker->imageUrl($width, $height);
     }
 
-    public function fillFile($type='pdf')
+    public function fillFile($type = 'pdf')
     {
         $randomFile = $this->faker->url();
     }
 
     public function fillWYSIWYG()
     {
-        return $this->faker->randomHtml(2,3);
+        return $this->faker->randomHtml(2, 3);
     }
 
     public function fillOembed()
@@ -82,7 +82,7 @@ class AcfFill
         return 'https://www.youtube.com/embed/YlyUfIn7r8I';
     }
 
-    public function fillGallery($min=null, $max=10)
+    public function fillGallery($min = null, $max = 10)
     {
         $gallery = [];
         $num_of_images = ($min) ? intval($min) : intval($max);
@@ -95,7 +95,7 @@ class AcfFill
         return $gallery;
     }
 
-    public function fillLink($target='_self')
+    public function fillLink($target = '_self')
     {
         return [
             'url' => $this->fillUrl(),
@@ -104,13 +104,9 @@ class AcfFill
         ];
     }
 
-    public function fillPostObject($post_types=['post'], $num_of_posts=5, $taxonomy=[])
+    public function fillPostObject($post_types = ['post'], $num_of_posts = 5, $taxonomy = [])
     {
-        if (!\is_array($post_types) && !empty($post_types)) {
-            $post_types = ['post'];
-        }
-
-        if (empty($post_types)) {
+        if (!\is_array($post_types) || empty($post_types)) {
             $post_types = ['post'];
         }
 
@@ -119,10 +115,85 @@ class AcfFill
             'numberposts' => \intval($num_of_posts)
         ];
 
-        if (!\is_array($taxonomy) && !empty($taxonomy)) {
-            $args['taxono']
+        if (!\is_array($taxonomy) || !empty($taxonomy)) {
+            $taxonomy_array = ['relationship' => 'AND'];
+
+            foreach ($taxonomy as $tax) {
+                $taxonomy_type = explode(':', $tax);
+
+                $taxonomy_array[] = [
+                    'taxonomy' => $taxonomy_type[0],
+                    'field' => 'slug',
+                    'terms' => [$taxonomy_type[2]]
+                ];
+            }
         }
 
+        $posts = get_posts($args);
+        $post_ids = [];
 
+        if (!empty($posts)) {
+            $post_ids = wp_list_pluck($posts, 'ID');
+        }
+
+        return $post_ids;
+    }
+
+    public function fillPageLink()
+    {
+        return $this->fillUrl();
+    }
+
+    public function fillRelationship($post_types = [], $taxonomies = [], $num_posts = 5)
+    {
+        if (!\is_array($post_types) || empty($post_types)) {
+            $post_types = ['post'];
+        }
+
+        return $this->fillPostObject($post_types, $taxonomies, $num_posts);
+    }
+
+    public function fillTaxonomy($taxonomy = 'category')
+    {
+        $terms = get_terms([
+            'taxonomy' => $taxonomy,
+            'hide_empty' => false,
+        ]);
+
+
+        return $terms;
+    }
+
+    #TODO Create fillUser
+    public function fillUser()
+    {
+        return null;
+    }
+
+    public function fillGoogleMaps()
+    {
+        return [
+            'address' => $this->faker->address()
+        ];
+    }
+
+    public function fillDateField()
+    {
+        return $this->faker->date($format = 'Ymd', $max = 'now');
+    }
+
+    public function fillDateTimeField()
+    {
+        return $this->faker->date($format = 'Y-m-d', $max = 'now') . $this->faker->time($format = 'H:i:s', $max = 'now');
+    }
+
+    public function fillTimeField()
+    {
+        return $this->faker->time($format = 'H:i:s', $max = 'now');
+    }
+
+    public function fillColorField()
+    {
+        return $this->faker->hexColor();
     }
 }
