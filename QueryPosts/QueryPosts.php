@@ -27,7 +27,7 @@ class QueryPosts
 
         $results = $this->wpdb->get_results($sql , ARRAY_A);
 
-        return \wp_list_pluck($results, 'id');
+        return \wp_list_pluck($results, 'post_id');
     }
 
     public function getIdsByPostType($post_type)
