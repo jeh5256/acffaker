@@ -2,7 +2,8 @@
 
 namespace AcfFill;
 
-require_once __DIR__ . '../vendor/autoload.php';
+//require_once __DIR__ . '../vendor/autoload.php';
+require_once(realpath(dirname(__FILE__)) . '../../vendor/autoload.php');
 
 use Faker\Factory as Faker;
 
@@ -21,10 +22,10 @@ class AcfFill
             return $default_value;
         }
 
-        return $text = $this->faker->sentence($maxlength);
+        return $this->faker->sentence($maxlength);
     }
 
-    public function fillNumber($default_value = '', $min = 0, $max = 1000, $prepend = '', $append = '')
+    public function fillNumber($default_value = '', $min = 0, $max = 1000)
     {
         if (!empty($default_value)) {
             return $default_value;
