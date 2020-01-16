@@ -2,7 +2,8 @@
 
 namespace QueryPosts;
 
-//require_once '../../wp-load.php';
+//require_once realpath(dirname(__FILE__)) . '/../../wp-load.php';
+//require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/acf-faker/QueryPosts/QueryPosts.php');
 
 class QueryPosts
 {
@@ -39,6 +40,6 @@ class QueryPosts
             $post_type
         );
 
-        return $this->wpdb->get_results($sql , ARRAY_A);
+        return \wp_list_pluck($this->wpdb->get_results($sql , ARRAY_A), 'id');
     }
 }
