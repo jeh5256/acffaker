@@ -11,11 +11,6 @@ class AcfFill
 {
     protected $faker;
 
-    public function __construct()
-    {
-        $this->faker = Faker::create();
-    }
-
     public function fillText($maxlength = 10, $default_value = '')
     {
         if (!empty($default_value)) {
