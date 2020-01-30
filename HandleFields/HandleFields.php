@@ -16,18 +16,33 @@ class HandleFields
             throw new \Error('ids and fields parameters must be arrays');
         }
 
-        $faker = new AcfFill();
+        $acf_fill = new AcfFill();
 
         foreach ($ids as $id) {
             foreach ($fields as $field) {
                 switch ($field['type']) {
                     case 'text':
-                        $content = $faker->fillText($field['maxlength'], $field['default_value']);
-
+                        $content = $acf_fill->fillText($field['maxlength'], $field['default_value']);
                         break;
 
                     case 'number':
-                        $content = $faker->fillNumber($field['default_value'], $field['min'], $field['max']);
+                        $content = $acf_fill->fillNumber($field['default_value'], $field['min'], $field['max']);
+                        break;
+
+                    case 'email':
+                        $content = $acf_fill->fillEmail($field['default_value']);
+                        break;
+
+                    case 'url':
+                        $content = $acf_fill->fillUrl();
+                        break;
+
+                    case 'password':
+                        $content = $acf_fill->fillPassword();
+                        break;
+
+                    case 'image':
+                        $content = $acf_fill->fillImage();
 
                         break;
 
@@ -36,12 +51,11 @@ class HandleFields
                 }
 
                 if (!empty(\get_post($id))) {
-                    \var_dump($field['name']);
-                    \var_dump($field['type'] === 'text');
-                    \var_dump('content' . $content);
-                    \var_dump('id' . \intval($id));
-                    $a = \update_field($field['name'], $content, \intval($id));
-                    \var_dump('status' . $a);
+                    \update_field($field['name'], $content, \intval($id));
+
+                    if ($field['name'] === 'image_field') {
+                        \var_dump($content);
+                    }
                 }
             }
         }
