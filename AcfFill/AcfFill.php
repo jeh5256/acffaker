@@ -66,6 +66,9 @@ class AcfFill
         $image_data = file_get_contents($url);
         $filename = basename($url);
 
+        //File name is in the format of ?XXXX
+        $filename = str_replace('?', '', $filename) . '.jpg';
+
         if (wp_mkdir_p( $upload_dir['path'])) {
             $file = $upload_dir['path'] . '/' . $filename;
         }
@@ -103,7 +106,7 @@ class AcfFill
         $query_images = new \WP_Query($args);
 
         if (count($query_images->posts) > 0) {
-            return $query_images[0]->ID;
+            return [];
         } else {
             return null;
         }
@@ -112,10 +115,10 @@ class AcfFill
 
     public function fillImage($width = 500, $height = 500)
     {
-        $existing_images = $this->checkForExistingImages();
-        if (count($existing_images) > 0) {
-            return $existing_images;
-        }
+//        $existing_images = $this->checkForExistingImages();
+//        if (count($existing_images) > 0) {
+//            return $existing_images;
+//        }
         
         $image_url = $this->faker->imageUrl($width, $height);
 
