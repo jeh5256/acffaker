@@ -43,7 +43,14 @@ class HandleFields
 
                     case 'image':
                         $content = $acf_fill->fillImage();
+                        break;
 
+                    case 'wysiwyg':
+                        $content = $acf_fill->fillWYSIWYG();
+                        break;
+
+                    case 'oembed':
+                        $content = $acf_fill->fillOembed();
                         break;
 
                     default:

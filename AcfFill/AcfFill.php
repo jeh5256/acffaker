@@ -29,7 +29,7 @@ class AcfFill
             $maxlength = 10;
         }
 
-        return $this->faker->sentence($maxlength);
+        return $this->faker->text($maxlength);
     }
 
     public function fillNumber($default_value = '', $min = 0, $max = 1000)
@@ -110,7 +110,6 @@ class AcfFill
         } else {
             return null;
         }
-
     }
 
     public function fillImage($width = 500, $height = 500)
@@ -127,12 +126,15 @@ class AcfFill
 
     public function fillFile($type = 'pdf')
     {
-        $randomFile = $this->faker->url();
+        return $randomFile = $this->faker->url();
     }
 
     public function fillWYSIWYG()
     {
-        return $this->faker->randomHtml(2, 3);
+        $html = $this->faker->randomHtml(2, 3);
+        preg_match('~<body[^>]*>(.*?)</body>~si', $html, $body);
+
+        return $body[1];
     }
 
     public function fillOembed()
