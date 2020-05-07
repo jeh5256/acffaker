@@ -53,14 +53,26 @@ class HandleFields
                         $content = $acf_fill->fillOembed();
                         break;
 
+                    case 'select':
+                        $content = $acf_fill->fillSelect($field['choices']);
+                        break;
+
+                    case 'link':
+                        $content = $acf_fill->fillLink();
+                        break;
+
+                    case 'post_object':
+                        $content = $acf_fill->fillPostObject($field['post_type']);
+                        break;
+
                     default:
                         $content = '';
                 }
 
                 if (!empty(\get_post($id))) {
-                    \update_field($field['name'], $content, \intval($id));
+                    \update_field($field['key'], $content, \intval($id));
 
-                    if ($field['name'] === 'image_field') {
+                    if ($field['key'] === 'image_field') {
                         \var_dump($content);
                     }
                 }

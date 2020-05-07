@@ -134,12 +134,20 @@ class AcfFill
         $html = $this->faker->randomHtml(2, 3);
         preg_match('~<body[^>]*>(.*?)</body>~si', $html, $body);
 
-        return $body[1];
+        return $body ? $body[1] : '';
     }
 
     public function fillOembed()
     {
         return 'https://www.youtube.com/embed/YlyUfIn7r8I';
+    }
+
+    public function fillSelect($choices=[]) {
+        if (!empty($choices) && \is_array($choices)) {
+            return $choices[0];
+        }
+
+        return $this->fillText(10);
     }
 
     public function fillGallery($min = null, $max = 10)
@@ -155,16 +163,21 @@ class AcfFill
         return $gallery;
     }
 
+    /**
+     *
+     * @param string $target
+     * @return array
+     */
     public function fillLink($target = '_self')
     {
         return [
-            'url' => $this->fillUrl(),
             'title' => $this->fillText(10),
+            'url' => $this->fillUrl(),
             'target' => $target
         ];
     }
 
-    public function fillPostObject($post_types = ['post'], $num_of_posts = 5, $taxonomy = [])
+    public function fillPostObject($post_types = ['post'], $num_of_posts = 1, $taxonomy = [])
     {
         if (!\is_array($post_types) || empty($post_types)) {
             $post_types = ['post'];
