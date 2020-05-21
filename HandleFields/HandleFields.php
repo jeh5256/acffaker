@@ -65,6 +65,22 @@ class HandleFields
                         $content = $acf_fill->fillPostObject($field['post_type']);
                         break;
 
+                    case 'page_link':
+                        $content = $acf_fill->fillPageLink($field['post_type'], $field['taxonomy']);
+                        break;
+
+                    case 'relationship':
+                        $content = $acf_fill->fillRelationship($field['post_type'], $field['taxonomy'], $field['max']);
+                        break;
+
+                    case 'taxonomy':
+                        $content = $acf_fill->fillTaxonomy($field['taxonomy']);
+                        break;
+
+                    case 'user':
+                        $content = $acf_fill->fillUser($field['role']);
+                        break;
+
                     default:
                         $content = '';
                 }

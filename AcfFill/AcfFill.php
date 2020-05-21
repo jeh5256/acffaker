@@ -188,7 +188,7 @@ class AcfFill
             'numberposts' => \intval($num_of_posts)
         ];
 
-        if (!\is_array($taxonomy) || !empty($taxonomy)) {
+        if (!\is_array($taxonomy) && !empty($taxonomy)) {
             $taxonomy_array = ['relationship' => 'AND'];
 
             foreach ($taxonomy as $tax) {
@@ -212,15 +212,19 @@ class AcfFill
         return $post_ids;
     }
 
-    public function fillPageLink()
+    public function fillPageLink($post_types = ['post'], $taxonomy = [])
     {
-        return $this->fillUrl();
+        return $this->fillPostObject($post_types, 1, $taxonomy);
     }
 
     public function fillRelationship($post_types = [], $taxonomies = [], $num_posts = 5)
     {
         if (!\is_array($post_types) || empty($post_types)) {
             $post_types = ['post'];
+        }
+
+        if (!empty($num_posts) || $num_posts > 1) {
+            $num_posts = 1;
         }
 
         return $this->fillPostObject($post_types, $taxonomies, $num_posts);
@@ -233,14 +237,29 @@ class AcfFill
             'hide_empty' => false,
         ]);
 
+        if (!\is_wp_error($terms)) {
+            return \wp_list_pluck($terms, 'term_id');
+        }
 
-        return $terms;
+        return [];
     }
 
-    #TODO Create fillUser
-    public function fillUser()
+    public function fillUser($roles = ['admin'])
     {
-        return null;
+        $args = ['number' => 1];
+
+        if (\is_array($roles) && !empty($roles)) {
+            $args['role__in'] = $roles;
+        }
+
+        $user_query = new \WP_User_Query($args);
+        $results = $user_query->get_results();
+
+        if (count($results) > 0) {
+            return $results[0]->data->ID;
+        }
+
+        return '';
     }
 
     public function fillGoogleMaps()
