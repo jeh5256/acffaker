@@ -139,7 +139,7 @@ class AcfFill
 
     public function fillOembed()
     {
-        return 'https://www.youtube.com/embed/YlyUfIn7r8I';
+        return 'https://youtu.be/Ts71hfw4FFs';
     }
 
     public function fillSelect($choices=[]) {
@@ -262,10 +262,17 @@ class AcfFill
         return '';
     }
 
+    /**
+     * Generate random address within the United States
+     * @return array
+     */
     public function fillGoogleMaps()
     {
         return [
-            'address' => $this->faker->address()
+            'address' => $this->faker->address(),
+            'lat' => $this->faker->latitude($min = 30, $max = 50),
+            'lng' => $this->faker->longitude($min = -125, $max = -75),
+            'zoom' => 10
         ];
     }
 

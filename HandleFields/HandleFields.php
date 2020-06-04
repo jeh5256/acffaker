@@ -81,6 +81,22 @@ class HandleFields
                         $content = $acf_fill->fillUser($field['role']);
                         break;
 
+                    case 'google_map':
+                        $content = $acf_fill->fillGoogleMaps();
+                        break;
+
+                    case 'date_picker':
+                        $content = $acf_fill->fillDateField();
+                        break;
+
+                    case 'date_time_picker':
+                        $content = $acf_fill->fillDateTimeField();
+                        break;
+
+                    case 'time_picker':
+                        $content = $acf_fill->fillTimeField();
+                        break;
+
                     default:
                         $content = '';
                 }
@@ -88,7 +104,7 @@ class HandleFields
                 if (!empty(\get_post($id))) {
                     \update_field($field['key'], $content, \intval($id));
 
-                    if ($field['key'] === 'image_field') {
+                    if ($field['key'] === 'date_picker') {
                         \var_dump($content);
                     }
                 }
