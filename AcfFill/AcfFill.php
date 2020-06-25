@@ -32,13 +32,16 @@ class AcfFill
         return $this->faker->text($maxlength);
     }
 
-    public function fillNumber($default_value = '', $min = 0, $max = 1000)
+    public function fillNumber($default_value = '', $min = 10, $max = 100)
     {
         if (!empty($default_value)) {
             return $default_value;
         }
 
-        return $number = $this->faker->numberBetween(\intval($min), intval($max));
+        $min = !empty($min) ? intval($min) : 10;
+        $max = !empty($max) ? \intval($max) : 100;
+
+        return $this->faker->numberBetween($min, $max);
     }
 
     public function fillEmail($default_value = 'jdoe@aol.com')
@@ -291,8 +294,10 @@ class AcfFill
         return $this->faker->time($format = 'H:i:s', $max = 'now');
     }
 
-    public function fillColorField()
+    public function fillColorField($default = '')
     {
+        if (!empty($default)) return $default;
+
         return $this->faker->hexColor();
     }
 }
