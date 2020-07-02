@@ -8,6 +8,8 @@ use QueryPosts\QueryPosts;
 use AcfFill\AcfFill;
 use HandleFields\HandleFields;
 
+ini_set('max_execution_time', 120);
+
 $acf_json_path = get_template_directory() . '/acf-json';
 var_dump(realpath(dirname(__FILE__)));
 
