@@ -63,16 +63,20 @@ class AcfFill
         return $this->faker->password();
     }
 
-    public function uploadImageFromUrl($url)
+    public function uploadFileFromUrl($url)
     {
         $upload_dir = wp_upload_dir();
         $image_data = file_get_contents($url);
         $filename = basename($url);
 
-        //File name is in the format of ?XXXX
-        $filename = str_replace('?', '', $filename) . '.jpg';
+        //Faker library pulls from https://lorempixel.com
+        if (\strpos($url, 'lorempixel.com') !== false) {
+            //File name is in the format of ?XXXX
+            $filename = str_replace('?', '', $filename) . '.jpg';
+        }
 
-        if (wp_mkdir_p( $upload_dir['path'])) {
+
+        if (wp_mkdir_p($upload_dir['path'])) {
             $file = $upload_dir['path'] . '/' . $filename;
         }
         else {
@@ -97,7 +101,7 @@ class AcfFill
         return $attach_id;
     }
 
-    public function checkForExistingImages()
+    public function checkForExistingFiles($mime_type='')
     {
         $args = [
             'post_type'      => 'attachment',
@@ -106,30 +110,40 @@ class AcfFill
             'posts_per_page' => 1,
         ];
 
-        $query_images = new \WP_Query($args);
-
-        if (count($query_images->posts) > 0) {
-            return [];
-        } else {
-            return null;
+        if (!empty($mime_type) && (\is_string($mime_type) || \is_array($mime_type))) {
+            $args['post_mime_type'] = $mime_type;
         }
+        $query_images = new \WP_Query($args);
+        
+       return (count($query_images->posts) > 0) ? $query_images->posts[0]->ID : null;
+
     }
 
     public function fillImage($width = 500, $height = 500)
     {
-//        $existing_images = $this->checkForExistingImages();
+//        $existing_images = $this->checkForExistingFiles();
 //        if (count($existing_images) > 0) {
 //            return $existing_images;
 //        }
         
         $image_url = $this->faker->imageUrl($width, $height);
 
-        return $this->uploadImageFromUrl($image_url);
+        return $this->uploadFileFromUrl($image_url);
     }
 
-    public function fillFile($type = 'pdf')
+    public function fillFile($type = 'application/pdf')
     {
-        return $randomFile = $this->faker->url();
+        if (!\is_string($type) || \is_array($type)) {
+            $type = 'application/pdf';
+        }
+
+        $existing_file = $this->checkForExistingFiles($type);
+
+        if ($existing_file) {
+            return $existing_file;
+        } else {
+            return $this->uploadFileFromUrl(dirname(__FILE__) . '/../files/test.pdf');
+        }
     }
 
     public function fillWYSIWYG()
