@@ -33,6 +33,10 @@ class GenerateAcf
                 $content = $acf_fill->fillImage();
                 break;
 
+            case 'file':
+                $content = $acf_fill->fillFile();
+                break;
+
             case 'wysiwyg':
                 $content = $acf_fill->fillWYSIWYG();
                 break;
