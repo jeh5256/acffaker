@@ -2,6 +2,8 @@
 
 namespace AcfCommand;
 
+use ACFFaker;
+
 class AcfFakerCommands
 {
     /**
@@ -17,6 +19,9 @@ class AcfFakerCommands
      */
     public function fillAll($args, $assoc_args)
     {
+        $acfFaker = new ACFFaker();
+        $acfFaker->fillAll();
+
         WP_CLI::success( 'fill all' );
     }
 
@@ -25,21 +30,21 @@ class AcfFakerCommands
      *
      * ## OPTIONS
      *
+     * [--types[=<value>]]
+     * : Array of post types to fill
+     * ---
+     * default: all
+     * ---
+     *
      * [--posts]
      * : Array of post ids to fill
      * ---
      * default: false
      * ---
      *
-     * [--type=<type>]
-     * : Array of post types to fill
-     * ---
-     * default: all
-     * ---
-     *
      * ## EXAMPLES
      *
-     *     wp acffake --posts=1,2,3,4 --type=page,post,custom-post-type
+     *     wp acffaker --posts=1,2,3,4 --type=page,post,custom-post-type
      *
      * @when after_wp_load
      * @param $args
