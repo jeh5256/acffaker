@@ -13,7 +13,7 @@ class HandleFields
 
     public static function handle($ids=[], $fields=[])
     {
-        if (!\is_array($ids) || !\is_array($fields)) {
+        if (!is_array($ids) || !is_array($fields)) {
             throw new \Error('ids and fields parameters must be arrays');
         }
 
@@ -24,13 +24,9 @@ class HandleFields
 
                 $content = GenerateAcf::generate($acf_fill, $field);
 
-                if (!empty(\get_post($id))) {
+                if (!empty(get_post($id))) {
+                    update_field($field['key'], $content, \intval($id));
 
-                    \update_field($field['key'], $content, \intval($id));
-
-                    if ($field['key'] === 'date_picker') {
-                        \var_dump($content);
-                    }
                 }
             }
         }
