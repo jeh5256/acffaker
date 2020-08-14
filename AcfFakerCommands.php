@@ -6,6 +6,13 @@ use ACFFaker;
 
 class AcfFakerCommands
 {
+    protected $acfFaker;
+
+    public function __construct()
+    {
+        $this->acfFaker = new ACFFaker();
+    }
+
     /**
      * Fill all ACF Fields with Faker data from fzaninotto/faker
      *
@@ -19,10 +26,9 @@ class AcfFakerCommands
      */
     public function fillAll($args, $assoc_args)
     {
-        $acfFaker = new ACFFaker();
-        $acfFaker->fillAll();
+        $this->acfFaker->fillAll();
 
-        WP_CLI::success( 'fill all' );
+        WP_CLI::success( 'Completed' );
     }
 
     /**
@@ -52,10 +58,12 @@ class AcfFakerCommands
      */
     public function fillPosts($args, $assoc_args)
     {
-        $posts = explode(',', $assoc_args['posts']);
-
-        foreach ($posts as $p) {
-            WP_CLI::success(  $p );
+        if (!empty($assoc_args['posts']) || !empty($assoc_args['types'])) {
+            $this->acfFaker->fillByIdOrType($assoc_args['posts'], $assoc_args['types']);
         }
+
+        $this->acfFaker->fillAll();
+
+        WP_CLI::success( 'Completed' );
     }
 }
