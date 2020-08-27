@@ -1,9 +1,21 @@
 {
+    "name": "jeh5256/acffaker",
+    "description": "Fill in ACF fields with content faked from fzaninotto/faker",
+    "type": "wp-cli-package",
+    "license": "v",
+    "authors": [
+        {
+            "name": "Justin",
+            "email": "jhughes@cliquestudios.com"
+        }
+    ],
     "require": {
+        "php": ">=7.3",
         "fzaninotto/faker": "^1.9",
         "ext-json": "*"
     },
     "autoload": {
+        "files": [ "command.php" ],
         "psr-4": {
             "AcfFaker\\": "acf-faker"
         }
