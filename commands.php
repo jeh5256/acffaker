@@ -2,7 +2,7 @@
 
 namespace WP_CLI_Sage;
 
-require_once 'AcfFakerCommands.php';
+//require_once 'AcfFakerCommands.php';
 
 use AcfCommand\AcfFakerCommands;
 
