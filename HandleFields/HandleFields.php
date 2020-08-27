@@ -2,9 +2,6 @@
 
 namespace HandleFields;
 
-require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/acf-faker/QueryPosts/QueryPosts.php');
-require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/acf-faker/AcfFill/AcfFill.php');
-require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/acf-faker/AcfFill/GenerateAcf.php');
 use AcfFill\AcfFill;
 use AcfFill\GenerateAcf;
 

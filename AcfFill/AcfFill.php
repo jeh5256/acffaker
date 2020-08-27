@@ -2,10 +2,8 @@
 
 namespace AcfFill;
 
-//require_once __DIR__ . '../vendor/autoload.php';
-require_once(realpath(dirname(__FILE__)) . '../../vendor/autoload.php');
 require_once( ABSPATH . 'wp-admin/includes/image.php' );
-require_once( \ABSPATH . 'wp-includes/class-wp-query.php');
+require_once( ABSPATH . 'wp-includes/class-wp-query.php');
 
 use Faker\Factory as Faker;
 

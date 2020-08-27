@@ -2,9 +2,6 @@
 
 namespace QueryPosts;
 
-//require_once realpath(dirname(__FILE__)) . '/../../wp-load.php';
-//require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/acf-faker/QueryPosts/QueryPosts.php');
-
 class QueryPosts
 {
     public static function getPostIdsByTemplate($page_template)
@@ -66,7 +63,7 @@ class QueryPosts
             ]
         );
 
-        return \wp_list_pluck($wpdb->get_results($sql , ARRAY_A), 'id');
+        return wp_list_pluck($wpdb->get_results($sql , ARRAY_A), 'id');
     }
 
     private static function convert_to_sql_ready_string( $arr ) {

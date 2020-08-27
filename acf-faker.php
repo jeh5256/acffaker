@@ -1,8 +1,7 @@
 <?php
 
 require_once '../wp-load.php';
-require_once './QueryPosts/QueryPosts.php';
-require_once './HandleFields/HandleFields.php';
+require_once 'vendor/autoload.php';
 
 use QueryPosts\QueryPosts;
 use HandleFields\HandleFields;
@@ -19,6 +18,7 @@ class ACFFaker {
     }
 
     public function fillAll() {
+
         if ($handle = opendir($this->acf_json_path)) {
 
             while (false !== ($entry = readdir($handle))) {
@@ -26,26 +26,25 @@ class ACFFaker {
 
                     try {
                         $json = json_decode(file_get_contents($this->acf_json_path . '/' . $entry), true);
-                        $query_posts = new QueryPosts();
 
                         if (array_key_exists('location', $json)) {
                             foreach ($json['location'] as $location) {
+                                $template = $location[0]['value'];
 
                                 switch ($location[0]['param']) {
                                     case 'page_template':
-                                        $page_template = $location[0]['value'];
-                                        $page_ids = QueryPosts::getPostIdsByTemplate($page_template);
+                                        $post_ids = QueryPosts::getPostIdsByTemplate($template);
 
                                         break;
                                     case 'post_type':
-                                        $post_template = $location[0]['value'];
-                                        $post_ids = QueryPosts::getIdsByPostType($post_template);
-
-                                        if (!empty($post_ids)) {
-                                            HandleFields::handle($post_ids, $json['fields']);
-                                        }
+                                        $post_ids = QueryPosts::getIdsByPostType($template);
                                         break;
+
                                     default:
+                                }
+
+                                if (!empty($post_ids)) {
+                                    HandleFields::handle($post_ids, $json['fields']);
                                 }
                             }
                         }

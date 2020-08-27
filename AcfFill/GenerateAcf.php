@@ -1,8 +1,6 @@
 <?php
 
-
 namespace AcfFill;
-
 
 class GenerateAcf
 {
