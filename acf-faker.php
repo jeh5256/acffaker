@@ -1,6 +1,5 @@
 <?php
 
-require_once '../wp-load.php';
 require_once 'vendor/autoload.php';
 
 use QueryPosts\QueryPosts;
