@@ -14,7 +14,7 @@ class ACFFaker {
 
     public function __construct()
     {
-        $this->acf_json_path = get_template_directory() . '/acf-json';
+        $this->acf_json_path = \get_template_directory() . '/acf-json';
     }
 
     public function fillAll() {
@@ -70,7 +70,7 @@ class ACFFaker {
 
                 if (!empty($queried_ids)) {
                     foreach ($queried_ids as $queried_id) {
-                        $fields = get_field_objects($queried_id);
+                        $fields = \get_field_objects($queried_id);
 
                         if (!empty($fields)) {
                             HandleFields::handle($queried_ids, $fields);
@@ -82,7 +82,7 @@ class ACFFaker {
 
             if (empty($types) && !empty($ids)) {
                 foreach ($ids as $id) {
-                    $fields = get_field_objects($id);
+                    $fields = \get_field_objects($id);
 
                     if ($fields) {
                         HandleFields::handle($ids, $fields);
@@ -97,7 +97,7 @@ class ACFFaker {
 
                 if (!empty($queried_ids)) {
                     foreach ($queried_ids as $queried_id) {
-                        $fields = get_field_objects($queried_id);
+                        $fields = \get_field_objects($queried_id);
 
                         if (!empty($fields)) {
                             HandleFields::handle($queried_ids, $fields);
