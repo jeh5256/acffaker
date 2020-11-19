@@ -1,6 +1,6 @@
 <?php
 
-require_once '../vendor/autoload.php';
+namespace AcfFaker;
 
 use AcfFaker\QueryPosts\QueryPosts;
 use AcfFaker\HandleFields\HandleFields;
