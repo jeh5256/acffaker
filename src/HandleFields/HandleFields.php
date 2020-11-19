@@ -1,9 +1,9 @@
 <?php
 
-namespace HandleFields;
+namespace AcfFaker\HandleFields;
 
-use AcfFill\AcfFill;
-use AcfFill\GenerateAcf;
+use AcfFaker\AcfFill\AcfFill;
+use AcfFaker\AcfFill\GenerateAcf;
 
 class HandleFields
 {

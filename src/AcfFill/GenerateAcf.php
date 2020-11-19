@@ -1,6 +1,6 @@
 <?php
 
-namespace AcfFill;
+namespace AcfFaker\AcfFill;
 
 class GenerateAcf
 {

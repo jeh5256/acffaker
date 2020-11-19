@@ -1,9 +1,9 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 use AcfFaker\QueryPosts\QueryPosts;
-use HandleFields\HandleFields;
+use AcfFaker\HandleFields\HandleFields;
 
 ini_set('max_execution_time', 120);
 

@@ -1,8 +1,6 @@
 <?php
 
-namespace AcfCommand;
-
-use ACFFaker;
+namespace AcfFaker;
 
 class AcfFakerCommands
 {
