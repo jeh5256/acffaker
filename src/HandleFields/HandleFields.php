@@ -4,7 +4,7 @@ namespace AcfFaker\HandleFields;
 
 use AcfFaker\AcfFill\AcfFill;
 use AcfFaker\AcfFill\GenerateAcf;
-use Error;
+use Exception;
 
 class HandleFields
 {
@@ -12,7 +12,7 @@ class HandleFields
     public static function handle($ids=[], $fields=[])
     {
         if (!is_array($ids) || !is_array($fields)) {
-            throw new Error('ids and fields parameters must be arrays');
+            throw new Exception('ids and fields parameters must be arrays');
         }
 
         $acf_fill = new AcfFill();
