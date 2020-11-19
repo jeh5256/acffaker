@@ -4,6 +4,7 @@ namespace AcfFaker;
 
 use AcfFaker\QueryPosts\QueryPosts;
 use AcfFaker\HandleFields\HandleFields;
+use Exception;
 
 ini_set('max_execution_time', 120);
 
