@@ -2,6 +2,8 @@
 
 namespace AcfFaker;
 
+use ACFFaker;
+
 class AcfFakerCommands
 {
     protected $acfFaker;

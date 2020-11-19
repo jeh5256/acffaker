@@ -1,9 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 
-//require_once 'AcfFakerCommands.php';
-
-use AcfCommand\AcfFakerCommands;
+use AcfFaker\AcfFakerCommands;
 
 if (!class_exists('WP_CLI')) {
     return;
