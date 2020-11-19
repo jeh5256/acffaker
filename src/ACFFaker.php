@@ -12,9 +12,9 @@ class ACFFaker {
 
     protected $acf_json_path;
 
-    public function __construct()
+    public function __construct($template_directory)
     {
-        $this->acf_json_path = \get_template_directory() . '/acf-json';
+        $this->acf_json_path = $template_directory . '/acf-json';
     }
 
     public function fillAll() {
