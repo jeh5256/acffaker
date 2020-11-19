@@ -15,7 +15,7 @@
         "ext-json": "*"
     },
     "autoload": {
-        "files": [ "command.php" ],
+        "files": [ "commands.php" ],
         "psr-4": {
             "AcfFaker\\": "src/"
         }
