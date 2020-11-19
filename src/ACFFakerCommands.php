@@ -1,6 +1,7 @@
 <?php
 
 namespace AcfFaker;
+require_once '../../wp-load.php';
 
 class ACFFakerCommands
 {
