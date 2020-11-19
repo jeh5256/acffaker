@@ -17,7 +17,8 @@
     "autoload": {
         "files": [ "commands.php" ],
         "psr-4": {
-            "AcfFaker\\": "acf-faker"
+            "AcfFaker\\": "acf-faker",
+            "AcfCommand\\": "AcfFakerCommands.php"
         }
     }
 }

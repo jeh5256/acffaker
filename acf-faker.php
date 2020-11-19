@@ -2,7 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
-use QueryPosts\QueryPosts;
+use AcfFaker\QueryPosts\QueryPosts;
 use HandleFields\HandleFields;
 
 ini_set('max_execution_time', 120);

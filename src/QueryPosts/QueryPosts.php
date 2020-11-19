@@ -1,6 +1,6 @@
 <?php
 
-namespace QueryPosts;
+namespace AcfFaker\QueryPosts;
 
 class QueryPosts
 {
