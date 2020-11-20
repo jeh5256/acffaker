@@ -11,6 +11,10 @@ class GenerateAcf
                 $content = $acf_fill->fillText($field['maxlength'], $field['default_value']);
                 break;
 
+            case 'textarea':
+                $content = $acf_fill->fillText($field['default_value']);
+                break;
+
             case 'number':
                 $content = $acf_fill->fillNumber($field['default_value'], $field['min'], $field['max']);
                 break;

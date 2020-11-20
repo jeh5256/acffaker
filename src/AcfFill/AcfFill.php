@@ -30,6 +30,15 @@ class AcfFill
         return $this->faker->text($maxlength);
     }
 
+    public function fillTextArea($default_value = '')
+    {
+        if (!empty($default_value)) {
+            return $default_value;
+        }
+
+        return $this->faker->paragraph();
+    }
+
     public function fillNumber($default_value = '', $min = 10, $max = 100)
     {
         if (!empty($default_value)) {
