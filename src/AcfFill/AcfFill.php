@@ -120,7 +120,7 @@ class AcfFill
     public function fillImage($width = 500, $height = 500)
     {
         $existing_images = $this->checkForExistingFiles();
-        if (count($existing_images) > 0) {
+        if (!is_null($existing_images)) {
             return $existing_images;
         }
         
