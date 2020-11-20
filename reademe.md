@@ -14,6 +14,8 @@ You can install this package with following command.
 ```bash
 wp package install git@github.com:jeh5256/acffaker.git
 ```
+You will also need to navigate to the ~/.wp-cli/packages/vendor/jeh5256/acffaker and run `composer install`.
+
 
 ## Usage
 
