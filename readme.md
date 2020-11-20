@@ -1,7 +1,7 @@
 jeh5256/acffaker
 ===========================
 
-WP Command line tool to generate Advanced Custom Fields data based on acf JSON. Package uses [fzaninotto/Faker](https://github.com/fzaninotto/Faker)
+WP Command line tool to generate Advanced Custom Fields data based on ACF JSON. Package uses [fzaninotto/Faker](https://github.com/fzaninotto/Faker)
 to generate content for your Advanced Custom Fields. This package requires you to have an acf-json folder in your theme.
 
 
@@ -21,10 +21,10 @@ You will also need to navigate to the ~/.wp-cli/packages/vendor/jeh5256/acffaker
 
 `wp acffake fillAll`
 
-This will search through all ACF json files and generate faker data for every field
+This will search through all ACF JSON files and generate faker data for every field
 
 
-`wp acffake fillPosts --posts=1,2,3,4 --type=page,post,custom-post-type`
+`wp acffake fillPosts`
 
 This will fill posts by post id, post type, or by a post id with a post type
 
