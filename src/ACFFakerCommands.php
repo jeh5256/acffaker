@@ -52,7 +52,7 @@ class ACFFakerCommands
      *
      * ## EXAMPLES
      *
-     *     wp acffaker --posts=1,2,3,4 --type=page,post,custom-post-type
+     *     wp acffake fillPosts --posts=1,2,3,4 --type=page,post,custom-post-type
      *
      * @when after_wp_load
      * @param $args
