@@ -2,6 +2,8 @@
 
 namespace AcfFaker;
 
+use WP_CLI;
+
 class ACFFakerCommands
 {
     protected $acfFaker;
@@ -9,7 +11,7 @@ class ACFFakerCommands
     public function __construct()
     {
 
-        $this->acfFaker = new ACFFaker();
+        $this->acfFaker = new ACFFaker(get_template_directory());
     }
 
     /**
