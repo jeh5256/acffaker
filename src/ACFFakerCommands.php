@@ -1,7 +1,6 @@
 <?php
 
 namespace AcfFaker;
-require_once '../../wp-load.php';
 
 class ACFFakerCommands
 {
@@ -10,7 +9,7 @@ class ACFFakerCommands
     public function __construct()
     {
 
-        $this->acfFaker = new ACFFaker(\get_template_directory());
+        $this->acfFaker = new ACFFaker();
     }
 
     /**
