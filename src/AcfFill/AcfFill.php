@@ -119,10 +119,10 @@ class AcfFill
 
     public function fillImage($width = 500, $height = 500)
     {
-//        $existing_images = $this->checkForExistingFiles();
-//        if (count($existing_images) > 0) {
-//            return $existing_images;
-//        }
+        $existing_images = $this->checkForExistingFiles();
+        if (count($existing_images) > 0) {
+            return $existing_images;
+        }
         
         $image_url = $this->faker->imageUrl($width, $height);
 
