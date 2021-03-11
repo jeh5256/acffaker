@@ -121,8 +121,8 @@ class ACFFaker {
                 $post_id = wp_insert_post([
                     'post_status' => 'draft',
                     'post_type' => sanitize_title($type)
-                ]);
-                \var_dump($post_id);
+                ],true );
+                \var_dump('post' . $post_id);
                 if (!is_wp_error($post_id)) {
                     WP_CLI::log("Created post of type {$type}: {$post_id}");
                     $ids[] = $post_id;
@@ -135,8 +135,8 @@ class ACFFaker {
                         $post_id = wp_insert_post([
                             'post_status' => 'draft',
                             'post_type' => sanitize_title($post_type)
-                        ]);
-
+                        ], true);
+                        \var_dump('post' . $post_id);
                         if (!is_wp_error($post_id)) {
                             WP_CLI::log("Created post of type {$post_type}: {$post_id}");
                             $ids[] = $post_id;
