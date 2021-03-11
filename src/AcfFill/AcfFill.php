@@ -2,9 +2,6 @@
 
 namespace AcfFaker\AcfFill;
 
-//require_once( ABSPATH . 'wp-admin/includes/image.php' );
-//require_once( ABSPATH . 'wp-includes/class-wp-query.php');
-
 use Faker\Factory as Faker;
 
 class AcfFill
