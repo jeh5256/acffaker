@@ -8,12 +8,6 @@ class ACFFakerCommands
 {
     protected $acfFaker;
 
-    public function __construct()
-    {
-
-
-    }
-
     /**
      * Fill all ACF Fields with Faker data from fzaninotto/faker
      *
@@ -27,10 +21,10 @@ class ACFFakerCommands
      */
     public function fillAll($args, $assoc_args)
     {
-        $this->acfFaker = new ACFFaker(\get_template_directory());
+        $this->acfFaker = new ACFFaker(get_template_directory());
         $this->acfFaker->fillAll();
 
-        WP_CLI::success( 'Completed' );
+        WP_CLI::success('Completed');
     }
 
     /**
@@ -60,13 +54,13 @@ class ACFFakerCommands
      */
     public function fillPosts($args, $assoc_args)
     {
-        $this->acfFaker = new ACFFaker(\get_template_directory());
+        $this->acfFaker = new ACFFaker(get_template_directory());
         if (!empty($assoc_args['posts']) || !empty($assoc_args['types'])) {
             $this->acfFaker->fillByIdOrType($assoc_args['posts'], $assoc_args['types']);
         }
 
         $this->acfFaker->fillAll();
 
-        WP_CLI::success( 'Completed' );
+        WP_CLI::success('Completed');
     }
 }
