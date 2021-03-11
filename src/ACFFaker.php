@@ -2,6 +2,7 @@
 
 namespace AcfFaker;
 
+use AcfFaker\AcfFill\AcfFill;
 use AcfFaker\QueryPosts\QueryPosts;
 use AcfFaker\HandleFields\HandleFields;
 use Exception;
@@ -115,14 +116,20 @@ class ACFFaker {
         $ids = [];
 
         $number = is_numeric($number)  ? $number : 1;
+        $acf_fill = new AcfFill();
 
         if (is_string($type)) {
             for ($i=0; $i < $number; $i++) {
+                $post_title = $acf_fill->fillText(40);
+
                 $post_id = wp_insert_post([
                     'post_status' => 'draft',
-                    'post_type' => sanitize_title($type)
+                    'post_type' => sanitize_title($type),
+                    'post_title' => $post_title,
+                    'post_content' => '',
+                    'post_excerpt' => ''
                 ],true );
-                \var_dump($post_id->get_error_message());
+
                 if (!is_wp_error($post_id)) {
                     WP_CLI::log("Created post of type {$type}: {$post_id}");
                     $ids[] = $post_id;
@@ -132,11 +139,16 @@ class ACFFaker {
             if (!empty($type)) {
                 for ($j=0; $j < $number; $j++) {
                     foreach ($type as $post_type) {
+                        $post_title = $acf_fill->fillText(40);
+
                         $post_id = wp_insert_post([
                             'post_status' => 'draft',
-                            'post_type' => sanitize_title($post_type)
+                            'post_type' => sanitize_title($post_type),
+                            'post_title' => $post_title,
+                            'post_content' => '',
+                            'post_excerpt' => ''
                         ], true);
-                        \var_dump($post_id->get_error_message());
+
                         if (!is_wp_error($post_id)) {
                             WP_CLI::log("Created post of type {$post_type}: {$post_id}");
                             $ids[] = $post_id;
