@@ -63,4 +63,37 @@ class ACFFakerCommands
 
         WP_CLI::success('Completed');
     }
+
+    /**
+     * Create a set number of posts
+     *
+     * ## OPTIONS
+     *
+     * [--types[=<value>]]
+     * : Array of post types to create
+     * ---
+     * default: post
+     * ---
+     *
+     * [--number]
+     * : Number of posts to create for each post type
+     * ---
+     * default: 1
+     * ---
+     *
+     * ## EXAMPLES
+     *
+     *     wp acffake createPost --posts=1,2,3,4 --type=page,post,custom-post-type
+     *
+     * @when after_wp_load
+     * @param $args
+     * @param $assoc_args
+     */
+    public function createPosts($args, $assoc_args)
+    {
+        \var_dump($assoc_args);
+        \var_dump($args);
+
+        WP_CLI::success('Completed');
+    }
 }
