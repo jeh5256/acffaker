@@ -93,6 +93,7 @@ class ACFFakerCommands
     {
         $number_of_posts = !empty($assoc_args['number']) ? $assoc_args['number'] : 1;
         $post_types = is_array($args) ? $args : [];
+        $this->acfFaker = new ACFFaker(get_template_directory());
         $posts = $this->acfFaker->createPosts($post_types, $number_of_posts);
         $this->acfFaker->fillByIdOrType($posts);
 
