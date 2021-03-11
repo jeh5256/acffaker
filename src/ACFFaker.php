@@ -108,4 +108,43 @@ class ACFFaker {
 
         } catch(Exception $e) { echo $e; }
     }
+
+    public function createPostTypes($type, $number=1): array
+    {
+        $ids = [];
+
+        $number = is_numeric($number)  ? $number : 1;
+
+        if (is_string($type)) {
+            for ($i=0; $i < $number; $i++) {
+                $post_id = wp_insert_post([
+                    'post_status' => 'draft',
+                    'post_type' => sanitize_title($type)
+                ]);
+
+                if (!is_wp_error($post_id)) {
+                    WP_CLI::log("Created post of type {$type}: {$post_id}");
+                    $ids[] = $post_id;
+                }
+            }
+        } elseif (is_array($type)) {
+            if (!empty($type)) {
+                for ($j=0; $j < $number; $j++) {
+                    foreach ($type as $post_type) {
+                        $post_id = wp_insert_post([
+                            'post_status' => 'draft',
+                            'post_type' => sanitize_title($post_type)
+                        ]);
+
+                        if (!is_wp_error($post_id)) {
+                            WP_CLI::log("Created post of type {$post_type}: {$post_id}");
+                            $ids[] = $post_id;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $ids;
+    }
 }
