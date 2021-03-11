@@ -69,7 +69,7 @@ class ACFFakerCommands
      *
      * ## OPTIONS
      *
-     * [--types[=<value>]]
+     * <types>...
      * : Array of post types to create
      * ---
      * default: post
@@ -83,7 +83,7 @@ class ACFFakerCommands
      *
      * ## EXAMPLES
      *
-     *     wp acffake createPost --posts=1,2,3,4 --type=page,post,custom-post-type
+     *     wp acffake createPost post page custom-post-type ... --number=10
      *
      * @when after_wp_load
      * @param $args
@@ -91,8 +91,10 @@ class ACFFakerCommands
      */
     public function createPosts($args, $assoc_args)
     {
-        \var_dump($assoc_args);
-        \var_dump($args);
+        $number_of_posts = !empty($assoc_args['number']) ? $assoc_args['number'] : 1;
+        $post_types = is_array($args) ? $args : [];
+        $posts = $this->acfFaker->createPosts($post_types, $number_of_posts);
+        $this->acfFaker->fillByIdOrType($posts);
 
         WP_CLI::success('Completed');
     }
