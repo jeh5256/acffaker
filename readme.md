@@ -1,7 +1,7 @@
 jeh5256/acffaker
 ===========================
 
-WP Command line tool to generate Advanced Custom Fields data based on ACF JSON. Package uses [fzaninotto/Faker](https://github.com/fzaninotto/Faker)
+WP Command line tool to generate Advanced Custom Fields data based on ACF JSON. Package uses [fakerphp/faker](https://github.com/FakerPHP/Faker/)
 to generate content for your Advanced Custom Fields. This package requires you to have an acf-json folder in your theme.
 
 
