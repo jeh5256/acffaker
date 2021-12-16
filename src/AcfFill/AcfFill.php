@@ -2,7 +2,7 @@
 
 namespace AcfFaker\AcfFill;
 
-use Faker\Factory as Faker;
+use Faker\Factory;
 
 class AcfFill
 {
@@ -11,7 +11,7 @@ class AcfFill
 
     public function __construct()
     {
-        $this->faker = Faker::create();
+        $this->faker = Factory::create();
     }
 
     public function fillText($maxlength, $default_value = '')
@@ -54,7 +54,7 @@ class AcfFill
             return $default_value;
         }
 
-        return $email = $this->faker->email();
+        return $this->faker->email();
     }
 
     public function fillUrl()
@@ -74,7 +74,7 @@ class AcfFill
         $filename = basename($url);
 
         //Faker library pulls from https://lorempixel.com
-        if (\strpos($url, 'lorempixel.com') !== false) {
+        if (strpos($url, 'lorempixel.com') !== false) {
             //File name is in the format of ?XXXX
             $filename = str_replace('?', '', $filename) . '.jpg';
         }
@@ -126,6 +126,7 @@ class AcfFill
     public function fillImage($width = 500, $height = 500)
     {
         $existing_images = $this->checkForExistingFiles();
+
         if (!is_null($existing_images)) {
             return $existing_images;
         }
@@ -200,13 +201,13 @@ class AcfFill
 
     public function fillPostObject($post_types = ['post'], $num_of_posts = 1, $taxonomy = [])
     {
-        if (!\is_array($post_types) || empty($post_types)) {
+        if (!is_array($post_types) || empty($post_types)) {
             $post_types = ['post'];
         }
 
         $args = [
             'post_type' => $post_types,
-            'numberposts' => \intval($num_of_posts)
+            'numberposts' => intval($num_of_posts)
         ];
 
         if (!\is_array($taxonomy) && !empty($taxonomy)) {
@@ -258,8 +259,8 @@ class AcfFill
             'hide_empty' => false,
         ]);
 
-        if (!\is_wp_error($terms)) {
-            return \wp_list_pluck($terms, 'term_id');
+        if (!is_wp_error($terms)) {
+            return wp_list_pluck($terms, 'term_id');
         }
 
         return [];
@@ -269,7 +270,7 @@ class AcfFill
     {
         $args = ['number' => 1];
 
-        if (\is_array($roles) && !empty($roles)) {
+        if (is_array($roles) && !empty($roles)) {
             $args['role__in'] = $roles;
         }
 
@@ -291,25 +292,25 @@ class AcfFill
     {
         return [
             'address' => $this->faker->address(),
-            'lat' => $this->faker->latitude($min = 30, $max = 50),
-            'lng' => $this->faker->longitude($min = -125, $max = -75),
+            'lat' => $this->faker->latitude(30, 50),
+            'lng' => $this->faker->longitude(-125, -75),
             'zoom' => 10
         ];
     }
 
     public function fillDateField()
     {
-        return $this->faker->date($format = 'Ymd', $max = 'now');
+        return $this->faker->date('Ymd');
     }
 
     public function fillDateTimeField()
     {
-        return $this->faker->date($format = 'Y-m-d', $max = 'now') . $this->faker->time($format = 'H:i:s', $max = 'now');
+        return $this->faker->date() . $this->faker->time();
     }
 
     public function fillTimeField()
     {
-        return $this->faker->time($format = 'H:i:s', $max = 'now');
+        return $this->faker->time();
     }
 
     public function fillColorField($default = '')

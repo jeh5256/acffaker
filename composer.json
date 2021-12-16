@@ -1,6 +1,6 @@
 {
     "name": "jeh5256/acffaker",
-    "description": "Fill in ACF fields with content faked from fzaninotto/faker",
+    "description": "Fill in ACF fields with content faked from fakerphp/faker",
     "type": "wp-cli-package",
     "license": "v",
     "authors": [
@@ -10,9 +10,12 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
-        "fzaninotto/faker": "^1.9",
-        "ext-json": "*"
+        "php": ">=7.4",
+        "ext-json": "*",
+        "fakerphp/faker": "^1.17"
+    },
+    "config": {
+        "sort-packages": true
     },
     "autoload": {
         "files": [ "commands.php" ],
