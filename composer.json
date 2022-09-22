@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
+        "php": "^8.1",
         "ext-json": "*",
-        "fakerphp/faker": "^1.17"
+        "fakerphp/faker": "^1.20.0"
     },
     "config": {
         "sort-packages": true

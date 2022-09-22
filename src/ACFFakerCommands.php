@@ -6,7 +6,7 @@ use WP_CLI;
 
 class ACFFakerCommands
 {
-    protected $acfFaker;
+    protected ACFFaker $acfFaker;
 
     /**
      * Fill all ACF Fields with Faker data from fzaninotto/faker
@@ -19,7 +19,7 @@ class ACFFakerCommands
      * @param $args
      * @param $assoc_args
      */
-    public function fillAll($args, $assoc_args)
+    public function fillAll($args, $assoc_args): void
     {
         $this->acfFaker = new ACFFaker(get_template_directory());
         $this->acfFaker->fillAll();
@@ -52,11 +52,15 @@ class ACFFakerCommands
      * @param $args
      * @param $assoc_args
      */
-    public function fillPosts($args, $assoc_args)
+    public function fillPosts($args, $assoc_args): void
     {
         $this->acfFaker = new ACFFaker(get_template_directory());
+
+        $postArgs = $assoc_args['posts'] ?? [];
+        $typeArgs = $assoc_args['types'] ?? [];
+
         if (!empty($assoc_args['posts']) || !empty($assoc_args['types'])) {
-            $this->acfFaker->fillByIdOrType($assoc_args['posts'], $assoc_args['types']);
+            $this->acfFaker->fillByIdOrType($postArgs, $typeArgs);
         }
 
         $this->acfFaker->fillAll();
@@ -86,15 +90,14 @@ class ACFFakerCommands
      *     wp acffake createPost post page custom-post-type ... --number=10
      *
      * @when after_wp_load
-     * @param $args
-     * @param $assoc_args
+     * @param array $args
+     * @param array $assoc_args
      */
-    public function createPosts($args, $assoc_args)
+    public function createPosts(array $args, array $assoc_args): void
     {
         $number_of_posts = !empty($assoc_args['number']) ? $assoc_args['number'] : 1;
-        $post_types = is_array($args) ? $args : [];
         $this->acfFaker = new ACFFaker(get_template_directory());
-        $posts = $this->acfFaker->createPostTypes($post_types, $number_of_posts);
+        $posts = $this->acfFaker->createPostTypes($args, $number_of_posts);
         $this->acfFaker->fillByIdOrType($posts);
 
         WP_CLI::success('Completed');

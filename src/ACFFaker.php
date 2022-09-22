@@ -12,15 +12,15 @@ ini_set('max_execution_time', 120);
 
 class ACFFaker {
 
-    protected $acf_json_path;
+    protected string $acf_json_path;
 
     public function __construct($template_directory)
     {
         $this->acf_json_path = $template_directory . '/acf-json';
     }
 
-    public function fillAll() {
-
+    public function fillAll(): void
+    {
         if ($handle = opendir($this->acf_json_path)) {
 
             while (false !== ($entry = readdir($handle))) {
@@ -58,7 +58,7 @@ class ACFFaker {
         }
     }
 
-    public function fillByIdOrType($ids=[], $types=[])
+    public function fillByIdOrType($ids=[], $types=[]): void
     {
         try {
             if (!is_array($ids) || !is_array($types)) return;
@@ -72,19 +72,18 @@ class ACFFaker {
 
                 if (!empty($queried_ids)) {
                     foreach ($queried_ids as $queried_id) {
-                        $fields = \get_field_objects($queried_id);
+                        $fields = get_field_objects($queried_id);
 
                         if (!empty($fields)) {
                             HandleFields::handle($queried_ids, $fields);
                         }
                     }
-
                 }
             }
 
             if (empty($types) && !empty($ids)) {
                 foreach ($ids as $id) {
-                    $fields = \get_field_objects($id);
+                    $fields = get_field_objects($id);
 
                     if ($fields) {
                         HandleFields::handle($ids, $fields);
@@ -92,14 +91,12 @@ class ACFFaker {
                 }
             }
 
-
-
             if (!empty($types) && empty($ids)) {
                 $queried_ids = QueryPosts::getPostsByType($types);
 
                 if (!empty($queried_ids)) {
                     foreach ($queried_ids as $queried_id) {
-                        $fields = \get_field_objects($queried_id);
+                        $fields = get_field_objects($queried_id);
 
                         if (!empty($fields)) {
                             HandleFields::handle($queried_ids, $fields);

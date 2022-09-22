@@ -3,6 +3,7 @@
 namespace AcfFaker\AcfFill;
 
 use Faker\Factory;
+use JetBrains\PhpStorm\ArrayShape;
 
 class AcfFill
 {
@@ -69,38 +70,35 @@ class AcfFill
 
     public function uploadFileFromUrl($url)
     {
-        $upload_dir = wp_upload_dir();
-        $image_data = file_get_contents($url);
-        $filename = basename($url);
+        try {
+            $upload_dir = wp_upload_dir();
+            $image_data = file_get_contents($url);
+            $filename = basename($url);
 
-        //Faker library pulls from https://lorempixel.com
-        if (strpos($url, 'lorempixel.com') !== false) {
-            //File name is in the format of ?XXXX
-            $filename = str_replace('?', '', $filename) . '.jpg';
+            if (wp_mkdir_p($upload_dir['path'])) {
+                $file = $upload_dir['path'] . '/' . $filename;
+            }
+            else {
+                $file = $upload_dir['basedir'] . '/' . $filename;
+            }
+
+            file_put_contents($file, $image_data);
+
+            $wp_filetype = wp_check_filetype($filename, null);
+
+            $attachment = array(
+                'post_mime_type' => $wp_filetype['type'],
+                'post_title' => sanitize_file_name( $filename ),
+                'post_content' => '',
+                'post_status' => 'inherit'
+            );
+
+            $attach_id = wp_insert_attachment( $attachment, $file );
+            $attach_data = wp_generate_attachment_metadata($attach_id, $file);
+            wp_update_attachment_metadata($attach_id, $attach_data);
+        } catch (\Exception $e) {
+            return null;
         }
-
-
-        if (wp_mkdir_p($upload_dir['path'])) {
-            $file = $upload_dir['path'] . '/' . $filename;
-        }
-        else {
-            $file = $upload_dir['basedir'] . '/' . $filename;
-        }
-
-        file_put_contents($file, $image_data);
-
-        $wp_filetype = wp_check_filetype($filename, null);
-
-        $attachment = array(
-            'post_mime_type' => $wp_filetype['type'],
-            'post_title' => sanitize_file_name( $filename ),
-            'post_content' => '',
-            'post_status' => 'inherit'
-        );
-
-        $attach_id = wp_insert_attachment( $attachment, $file );
-        $attach_data = wp_generate_attachment_metadata($attach_id, $file);
-        wp_update_attachment_metadata($attach_id, $attach_data);
 
         return $attach_id;
     }
@@ -172,7 +170,7 @@ class AcfFill
         return $this->fillText(10);
     }
 
-    public function fillGallery($min = null, $max = 10)
+    public function fillGallery($min = null, $max = 10): array
     {
         $gallery = [];
         $num_of_images = ($min) ? intval($min) : intval($max);
@@ -190,7 +188,8 @@ class AcfFill
      * @param string $target
      * @return array
      */
-    public function fillLink($target = '_self')
+    #[ArrayShape(['title' => "mixed", 'url' => "mixed", 'target' => "string"])]
+    public function fillLink(string $target = '_self'): array
     {
         return [
             'title' => $this->fillText(10),
@@ -199,7 +198,7 @@ class AcfFill
         ];
     }
 
-    public function fillPostObject($post_types = ['post'], $num_of_posts = 1, $taxonomy = [])
+    public function fillPostObject($post_types = ['post'], $num_of_posts = 1, $taxonomy = []): array
     {
         if (!is_array($post_types) || empty($post_types)) {
             $post_types = ['post'];
@@ -234,12 +233,12 @@ class AcfFill
         return $post_ids;
     }
 
-    public function fillPageLink($post_types = ['post'], $taxonomy = [])
+    public function fillPageLink($post_types = ['post'], $taxonomy = []): array
     {
         return $this->fillPostObject($post_types, 1, $taxonomy);
     }
 
-    public function fillRelationship($post_types = [], $taxonomies = [], $num_posts = 5)
+    public function fillRelationship($post_types = [], $taxonomies = [], $num_posts = 5): array
     {
         if (!\is_array($post_types) || empty($post_types)) {
             $post_types = ['post'];
@@ -252,7 +251,7 @@ class AcfFill
         return $this->fillPostObject($post_types, $taxonomies, $num_posts);
     }
 
-    public function fillTaxonomy($taxonomy = 'category')
+    public function fillTaxonomy($taxonomy = 'category'): array
     {
         $terms = get_terms([
             'taxonomy' => $taxonomy,
@@ -266,7 +265,7 @@ class AcfFill
         return [];
     }
 
-    public function fillUser($roles = ['admin'])
+    public function fillUser($roles = ['admin']): string
     {
         $args = ['number' => 1];
 
@@ -288,7 +287,8 @@ class AcfFill
      * Generate random address within the United States
      * @return array
      */
-    public function fillGoogleMaps()
+    #[ArrayShape(['address' => "mixed", 'lat' => "mixed", 'lng' => "mixed", 'zoom' => "int"])]
+    public function fillGoogleMaps(): array
     {
         return [
             'address' => $this->faker->address(),
@@ -303,7 +303,7 @@ class AcfFill
         return $this->faker->date('Ymd');
     }
 
-    public function fillDateTimeField()
+    public function fillDateTimeField(): string
     {
         return $this->faker->date() . $this->faker->time();
     }
